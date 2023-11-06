@@ -86,11 +86,10 @@ function sort(i) {
                 <div class="table-main-cell">{{ row.quantitat }}</div>
                 <div class="table-main-cell">{{ row.merme }}</div>
 
-                <div class="table-main-cell"></div>
-                <div class="table-main-cell"></div>
-                <div class="table-main-cell"></div>
-                <div class="table-main-cell"></div>
-
+                <div class="table-main-cell">{{ row.pesReal }}</div>
+                <div class="table-main-cell">{{ Math.round(row.pesTotal * 10) / 10 }}</div>
+                <div class="table-main-cell">{{ Math.round(row.mermeReal * 10) / 10 }}</div>
+                <div class="table-main-cell">{{ Math.round(row.pesRealReal * 10) / 10 }}</div>
                 <div class="settings">
                     <font-awesome-icon icon="fa-solid fa-ellipsis" />
                 </div>
@@ -168,7 +167,6 @@ function sort(i) {
 
 .table-main-cell {
     flex: 1;
-
     display: flex;
     align-items: center;
     padding: 10px;

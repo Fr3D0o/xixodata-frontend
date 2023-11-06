@@ -42,7 +42,6 @@ function select(item) {
 <template>
     <div class="torro-dropdown-wrapper">
 
-
         <div class="torro-dropdown" @click="toggleTorroDropdown" ref="torroDropdownElem">
             <div>{{ title }}</div>
             <font-awesome-icon class="dropdown-icon" :class="{ 'toggled': torroDropdown }" icon="fa-solid fa-caret-down" />

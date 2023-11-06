@@ -10,35 +10,37 @@ let props = defineProps({
     temporada: Number
 })
 
-const title = ref(null)
-const data = ref(null)
-const data1 = ref(null)
-const data2 = ref(null)
-
-const on = ref(true)
+let formatTemplate = {
+    nom: "",
+    barres: 0,
+    cuita: 0,
+    ingredients: [{ nom: "", merme: 0, quantitat: 0 }],
+    formats: [{ "format": "Encaixat a", "quantitat": 0, "mesura": "gr/caixo" }, { "format": "Tallat a", "quantitat": 0, "mesura": "barres/caixo" }, { "format": "Envasat a", "quantitat": 0, "mesura": "barres/caixa" }],
+    packagings: []
+}
 
 function create() {
-    add(title.value, data.value, data1.value, data2.value, props.temporada)
-
-    on.value = false
+    add(formatTemplate.nom, formatTemplate.barres, formatTemplate.cuita, formatTemplate.ingredients, formatTemplate.formats, formatTemplate.packagings, props.temporada)
 }
 
 </script>
 
 <template>
-    <Wrapper :title="title" @update:title="newValue => title = newValue" @create="create" @cancel-add="$emit('cancel-add')"
-        @save="$emit('saving')">
+    <Wrapper :title="formatTemplate.nom" @cancel-add="$emit('cancel-add')" @save="$emit('saving')"
+        @update:title="newValue => formatTemplate.nom = newValue" @create="create"
+        @update:barres="newValue => formatTemplate.barres = newValue"
+        @update:cuita="newValue => formatTemplate.cuita = newValue">
         <div class="tables-wrapper">
             <div class="table-wrapper">
-                <Table @update:data="newValue => data = newValue" />
+                <Table @update:data="newValue => formatTemplate.ingredients = newValue" />
             </div>
             <div class="tables-sub-wrapper">
                 <div class="table-sub-left">
-                    <TableFormat @update:data="newValue => data1 = newValue" />
+                    <TableFormat @update:data="newValue => formatTemplate.formats = newValue" />
                 </div>
                 <div class="table-sub-right">
                     <div class="table-wrapper">
-                        <TablePackaging @update:data="newValue => data2 = newValue" />
+                        <TablePackaging @update:data="newValue => formatTemplate.packagings = newValue" />
                     </div>
                 </div>
             </div>

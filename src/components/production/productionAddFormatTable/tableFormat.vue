@@ -43,7 +43,7 @@ function NumbersOnly(evt) {
                 <div class="table-main-cell">{{ row.format }}</div>
 
                 <div class="table-main-cell input">
-                    <input type="number" min="0" step="1" v-on:keypress="NumbersOnly" v-model="data[i].quantitat"
+                    <input type="number" min="0" step="1" v-model="data[i].quantitat"
                         @input="$emit('update:data', data)">
                 </div>
 

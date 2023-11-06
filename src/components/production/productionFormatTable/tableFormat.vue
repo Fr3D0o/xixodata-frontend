@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import Header from '@/components/production/productionFormatTable/header.vue'
 
 let props = defineProps({
@@ -8,20 +8,9 @@ let props = defineProps({
 
 const titles = ref(['Format', 'Quantitat', 'Mesura'])
 
-const dataObj = ref([])
-const data = ref(null)
+const data = ref(props.data)
 
 const sorters = ref({})
-
-function format() {
-    dataObj.value = [
-        { "format": "Encaixat a", "quantitat": props.data[0], "mesura": "gr/caixo" },
-        { "format": "Tallat a", "quantitat": props.data[1], "mesura": "barres/caixo" },
-        { "format": "Envasat a", "quantitat": props.data[2], "mesura": "barres/caixa" },
-    ]
-
-    data.value = dataObj.value
-}
 
 let sortCounter = 0
 let lastSort = 0
@@ -37,7 +26,7 @@ function sort(i) {
 
     sorters.value[i].sort()
 
-    let string = Object.keys(dataObj.value[0])[i];
+    let string = Object.keys(data.value[0])[i];
 
     function compare(a, b) {
         if (a[string] < b[string]) {
@@ -61,21 +50,20 @@ function sort(i) {
 
     switch (sortCounter) {
         case 0:
-            data.value = [...dataObj.value].sort(compare);
+            data.value = [...data.value].sort(compare);
             sortCounter = 1
             break
         case 1:
-            data.value = [...dataObj.value].sort(reverse);
+            data.value = [...data.value].sort(reverse);
             sortCounter = 2
             break
         case 2:
-            data.value = dataObj.value
+            data.value = data.value
             sortCounter = 0
             break
     }
 }
 
-onMounted(() => format())
 </script>
 
 <template>
@@ -95,9 +83,7 @@ onMounted(() => format())
         <div class="table-main-body">
             <div class="table-main-row" v-for="row in data">
                 <div class="table-main-cell">{{ row.format }}</div>
-
-                <div class="table-main-cell">{{ row.quantitat }}</div>
-
+                <div class="table-main-cell">{{ Math.round(row.quantitat * 10) / 10 }}</div>
                 <div class="table-main-cell">{{ row.mesura }}</div>
 
                 <div class="settings">

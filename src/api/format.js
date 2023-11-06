@@ -20,9 +20,9 @@ async function getByName(nom) {
     }
 }
 
-async function getByNameAndSeason(temporada, nom) {
+async function getAllBySeason(temporada) {
     try {
-        const response = await fetch(`http://localhost:3000/format/getByNameAndSeason/${temporada}/${nom}`);
+        const response = await fetch(`http://localhost:3000/format/getAllBySeason/${temporada}`);
         const json = await response.json();
 
         return json
@@ -31,7 +31,18 @@ async function getByNameAndSeason(temporada, nom) {
     }
 }
 
-async function add(titol, form1, form2, form3, temporada) {
+async function getAllBySeasonAndName(temporada, nom) {
+    try {
+        const response = await fetch(`http://localhost:3000/format/getAllBySeasonAndName/${temporada}/${nom}`);
+        const json = await response.json();
+
+        return json
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function add(titol, barres, cuita, form1, form2, form3, temporada) {
     let opts = {
         method: "POST",
         mode: "cors",
@@ -41,9 +52,11 @@ async function add(titol, form1, form2, form3, temporada) {
         body: JSON.stringify({
             nom: titol,
             torro: titol.split(' ', 1)[0],
+            barres: barres,
+            cuita: cuita,
             gramsXcaixo: form2[0].quantitat,
-            barresXcaixo: form2[0].quantitat,
-            barresXcaixa: form2[0].quantitat,
+            barresXcaixo: form2[1].quantitat,
+            barresXcaixa: form2[2].quantitat,
             ingredients: form1,
             packagings: form3,
             temporada: temporada
@@ -53,7 +66,7 @@ async function add(titol, form1, form2, form3, temporada) {
     try {
         const response = await fetch('http://localhost:3000/format/add', opts);
         const json = await response.json();
-        
+
         return json
     } catch (error) {
         console.error(error);
@@ -105,7 +118,8 @@ async function remove(id) {
 export {
     getAll,
     getByName,
-    getByNameAndSeason,
+    getAllBySeason,
+    getAllBySeasonAndName,
     add,
     edit,
     remove

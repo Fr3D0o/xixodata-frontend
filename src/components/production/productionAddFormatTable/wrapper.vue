@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
-defineEmits(['update:title'], ['create'])
+defineEmits(['update:title'], ['update:barres'], ['update:cuita'], ['create'])
 
 const input = ref({})
 
@@ -12,7 +12,12 @@ onMounted(() => input.value.focus())
 <template>
     <div class="tableWrapper">
         <div class="tableWrapperTitle">
-            <input ref="input" @input="$emit('update:title', $event.target.value)">
+            <div class="input-wrapper">
+                <input ref="input" @input="$emit('update:title', $event.target.value)" placeholder="Nom">
+                <input @input="$emit('update:barres', $event.target.value)" placeholder="Barres" type="number" min="1" step="1">
+                <input @input="$emit('update:cuita', $event.target.value)" placeholder="Cuita" type="number" step="0.01"
+                    min="0.01">
+            </div>
             <div class="settings">
                 <font-awesome-icon class="ok" icon="fa-solid fa-floppy-disk" @click="$emit('create'), $emit('saving')" />
                 <font-awesome-icon class="cancel" icon="fa-solid fa-trash" @click="$emit('cancel-add')" />
@@ -45,6 +50,11 @@ onMounted(() => input.value.focus())
     place-items: center;
     justify-content: space-between;
     user-select: none;
+}
+
+.input-wrapper {
+    display: flex;
+    gap: 10px;
 }
 
 .settings {

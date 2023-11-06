@@ -61,12 +61,12 @@ function NumbersOnly(evt) {
                 </div>
 
                 <div class="table-main-cell input">
-                    <input type="number" min="0" step="1" v-on:keypress="NumbersOnly" v-model="data[i].merme"
+                    <input type="number" min="0" step="1" v-on:keypress="NumbersOnly" v-model="data[i].quantitat"
                         @input="$emit('update:data', data)">
                 </div>
 
                 <div class="table-main-cell input">
-                    <input type="number" min="0" step="1" v-on:keypress="NumbersOnly" v-model="data[i].quantitat"
+                    <input type="number" min="0" step="1" v-on:keypress="NumbersOnly" v-model="data[i].merme"
                         @input="$emit('update:data', data)">
                 </div>
 

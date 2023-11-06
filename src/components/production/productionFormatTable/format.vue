@@ -1,12 +1,15 @@
 <script setup>
 import { ref } from 'vue'
 import Wrapper from '@/components/production/productionFormatTable/wrapper.vue'
-import Table from '@/components/production/productionFormatTable/table.vue'
+import Table from '@/components/production/productionFormatTable/tableIngredient.vue'
 import TableFormat from '@/components/production/productionFormatTable/tableFormat.vue'
 import TablePackaging from '@/components/production/productionFormatTable/tablePackaging.vue'
 
 let props = defineProps({
+    id: Number,
     title: String,
+    barres: Number,
+    cuita: Number,
     data1: Array,
     data2: Array,
     data3: Array,
@@ -15,15 +18,15 @@ let props = defineProps({
 </script>
 
 <template>
-    <Wrapper :title="title">
+    <Wrapper :title="title" :id="id">
         <div class="tables-wrapper">
-            <Table :data="data1" />
+            <Table :data="data1" :barres="barres" :cuita="cuita" />
             <div class="tables-sub-wrapper">
                 <div class="table-sub-left">
-                    <TableFormat :data="data2" />
+                    <TableFormat :data="data2" :barres="barres" :cuita="cuita" />
                 </div>
                 <div class="table-sub-right">
-                    <TablePackaging :data="data3" />
+                    <TablePackaging :data="data3" :barres="barres" :cuita="cuita" />
                 </div>
             </div>
         </div>

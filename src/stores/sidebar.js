@@ -1,4 +1,6 @@
 import { defineStore } from 'pinia'
+import { useProductionStore } from '@/stores/production'
+
 
 export const useSidebarStore = defineStore('sidebar', {
     state: () => {
@@ -41,6 +43,10 @@ export const useSidebarStore = defineStore('sidebar', {
         setLink(i) {
             this.links.map((x) => x.isClicked = false)
             this.links[i].isClicked = true;
+
+            const productionStore = useProductionStore()
+            console.log("LOL")
+            productionStore.setLink(0)
         },
     },
     persist: true,

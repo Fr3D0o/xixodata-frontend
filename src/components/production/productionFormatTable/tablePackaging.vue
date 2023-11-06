@@ -3,7 +3,9 @@ import { ref } from 'vue'
 import Header from '@/components/production/productionFormatTable/header.vue'
 
 let props = defineProps({
-    data: Array
+    data: Array,
+    barres: Number,
+    cuita: Number,
 })
 
 const titles = ref(['Nom', 'Mida', 'Quantitat'])
