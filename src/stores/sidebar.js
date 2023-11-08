@@ -45,7 +45,6 @@ export const useSidebarStore = defineStore('sidebar', {
             this.links[i].isClicked = true;
 
             const productionStore = useProductionStore()
-            console.log("LOL")
             productionStore.setLink(0)
         },
     },

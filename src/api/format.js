@@ -73,7 +73,28 @@ async function add(titol, barres, cuita, form1, form2, form3, temporada) {
     }
 }
 
-async function edit(form, id) {
+async function clean(id) {
+    let opts = {
+        method: "PUT",
+        mode: "cors",
+        headers: {
+            "Content-Type": "application/json",
+        }
+    }
+
+    try {
+        const response = await fetch(`http://localhost:3000/format/clean/${id}`, opts);
+        const json = await response.json();
+
+        return json
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function edit(id, titol, barres, cuita, form1, form2, form3, temporada) {
+    form1.splice(form1.length - 1, 1)
+
     let opts = {
         method: "PUT",
         mode: "cors",
@@ -81,12 +102,16 @@ async function edit(form, id) {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            nom: form.nom,
-            pes: form.pes,
-            pesXcaixo: form.pesXcaixo,
-            barresXcaixaTallat: form.barresXcaixaTallat,
-            barresXcaixo: form.barresXcaixo,
-            packagings: form.packagings
+            nom: titol,
+            torro: titol.split(' ', 1)[0],
+            barres: barres,
+            cuita: cuita,
+            gramsXcaixo: form2[0].quantitat,
+            barresXcaixo: form2[1].quantitat,
+            barresXcaixa: form2[2].quantitat,
+            ingredients: form1,
+            packagings: form3,
+            temporada: temporada
         })
     }
 
@@ -121,6 +146,7 @@ export {
     getAllBySeason,
     getAllBySeasonAndName,
     add,
+    clean,
     edit,
     remove
 }

@@ -3,9 +3,10 @@ import { ref } from 'vue'
 
 let props = defineProps({
     data: Array,
+    title: String
 })
 
-const title = ref("")
+const title = ref(props.title)
 
 const torroDropdown = ref(false)
 

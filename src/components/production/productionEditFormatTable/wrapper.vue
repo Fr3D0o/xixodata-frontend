@@ -1,25 +1,20 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
-
 defineEmits(['update:title'], ['update:barres'], ['update:cuita'], ['create'])
-
-let props = defineProps({
-    format: Object,
-})
 
 const input = ref({})
 
 onMounted(() => input.value.focus())
 </script>
 
+
 <template>
     <div class="tableWrapper">
         <div class="tableWrapperTitle">
             <div class="input-wrapper">
-                <input ref="input" @input="$emit('update:title', $event.target.value)" placeholder="Nom" :value="data">
-                <input @input="$emit('update:barres', $event.target.value)" placeholder="Barres" type="number" min="2"
-                    step="1">
+                <input ref="input" @input="$emit('update:title', $event.target.value)" placeholder="Nom">
+                <input @input="$emit('update:barres', $event.target.value)" placeholder="Barres" type="number" min="1" step="1">
                 <input @input="$emit('update:cuita', $event.target.value)" placeholder="Cuita" type="number" step="0.01"
                     min="0.01">
             </div>

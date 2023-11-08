@@ -5,7 +5,8 @@ import ProductionStaticDropdown from '@/components/production/productionStaticDr
 import AddButton from '@/components/production/productionAddFormatTable/addButton.vue'
 import FormatAdd from '@/components/production/productionAddFormatTable/format.vue'
 import Format from '@/components/production/productionFormatTable/format.vue'
-import { getAllBySeasonAndName } from '@/api/format.js'
+import FormatEdit from '@/components/production/productionEditFormatTable/format.vue'
+import { clean, edit, getAllBySeasonAndName, remove } from '@/api/format.js'
 
 const temporades = [2023, 2024, 2025]
 const torrons = ['Xixona', 'Alacant']
@@ -44,16 +45,32 @@ function cancelAdd() {
 
 function saving() {
     adding.value = false
+    formats.value = []
     getAllBySeasonAndName(currentTemporada, currentTorro).then(function (value) {
         formats.value = value
     })
 }
 
-function deleteFormat() {
-    getAllBySeasonAndName(currentTemporada, currentTorro).then(function (value) {
-        formats.value = value
+function savingEdit(formatTemplate) {
+    clean(formatTemplate.id).then(function () {
+        edit(formatTemplate.id, formatTemplate.nom, formatTemplate.barres, formatTemplate.cuita, formatTemplate.ingredients, formatTemplate.formats, formatTemplate.packagings, currentTemporada).then(function () {
+            getAllBySeasonAndName(currentTemporada, currentTorro).then(function (value) {
+                formats.value = value
+            })
+        })
     })
 }
+
+function deleteFormat(id) {
+    remove(id).then(function () {
+        getAllBySeasonAndName(currentTemporada, currentTorro).then(function (value) {
+            formats.value = value
+        })
+    })
+}
+
+const edditing = ref(false)
+const editRow = ref(null)
 onMounted(() => fetch(currentTemporada, currentTorro))
 </script>
 
@@ -71,9 +88,11 @@ onMounted(() => fetch(currentTemporada, currentTorro))
         <div class="body">
             <FormatAdd v-if="adding" @cancel-add="cancelAdd" @saving="saving" :temporada="currentTemporada" />
 
-            <Format v-for="format in formats" :id="format.id" :title="format.nom" :data1="format.ingredients"
-                @delete-format="deleteFormat" :barres="format.barres" :cuita="format.cuita" :data2="format.formats"
-                :data3="format.packagings" />
+            <div v-for="(format, i) in  formats ">
+                <Format :format="format" @delete-format="deleteFormat(format.id)" v-if="editRow != i"
+                    @edit-format="edditing = true, editRow = i" />
+                <FormatEdit v-if="editRow == i" :format="format" @cancel-add="editRow = null" @saving="savingEdit" />
+            </div>
         </div>
     </ProductionWrapper>
 </template>

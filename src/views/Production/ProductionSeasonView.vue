@@ -94,7 +94,7 @@ onMounted(() => fetch())
                 <div class="table-main-row" v-for="row in data">
                     <div class="table-main-cell">{{ row.nom }}</div>
                     <div class="table-main-cell">{{ row.barres }}</div>
-                    <div class="table-main-cell">{{ Math.round((row.barres / row.cuita) * 10)* 10 }}</div>
+                    <div class="table-main-cell">{{ Math.round((row.barres / row.cuita) * 10) / 10 }}</div>
                     <div class="table-main-cell">{{ row.barresXcaixo }}</div>
 
                     <div class="settings">

@@ -2,11 +2,14 @@
 import { ref } from 'vue'
 
 let props = defineProps({
-    title: String
+    title: String,
+    id: Number
 })
 
 const settings = ref(false)
 const settingsElem = ref({})
+const removeButton = ref({})
+const editButton = ref({})
 
 function toggleSettings() {
     if (settings.value) {
@@ -19,11 +22,13 @@ function toggleSettings() {
 }
 
 function hideDropdown(e) {
-    if (e.target != settingsElem.value) {
+    if (e.target != settingsElem.value && e.target != removeButton.value && e.target != editButton.value) {
         settings.value = false
         document.removeEventListener('click', hideDropdown)
     }
 }
+
+const removeAttempt = ref(false)
 
 </script>
 
@@ -33,18 +38,23 @@ function hideDropdown(e) {
         <div class="tableWrapperTitle">
             <div class="left">
                 <div>{{ title }}</div>
-                <font-awesome-icon icon="fa-solid fa-pen" />
             </div>
             <div class="settings">
                 <div class="icon-wrapper">
                     <div class="noclick" @click="toggleSettings" ref="settingsElem">
                         <font-awesome-icon icon="fa-solid fa-ellipsis" class="noclick" />
                     </div>
-                    <div class="edit" v-if="settings">
+                    <div class="edit" v-if="settings && !removeAttempt" ref="editButton" @click="$emit('editFormat')">
                         <font-awesome-icon icon="fa-solid fa-pen" />
                     </div>
-                    <div class="delete" v-if="settings" @click="$emit('removeFormat')">
+                    <div class="delete" v-if="settings && !removeAttempt" ref="removeButton" @click="removeAttempt = true">
                         <font-awesome-icon icon="fa-solid fa-trash" />
+                    </div>
+                    <div class="ok" v-if="removeAttempt" @click="removeAttempt = false, $emit('deleteFormat')">
+                        <font-awesome-icon icon="fa-solid fa-check" />
+                    </div>
+                    <div class="delete" v-if="removeAttempt" @click="removeAttempt = false">
+                        <font-awesome-icon icon="fa-solid fa-xmark" />
                     </div>
                 </div>
             </div>
@@ -155,6 +165,31 @@ function hideDropdown(e) {
     cursor: pointer;
     background: #FFD1D1;
     color: red;
+    border-radius: 5px;
+    aspect-ratio: 1/1;
+    height: 40px;
+    display: flex;
+    place-content: center;
+    place-items: center;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.delete:active {
+    scale: 1.3;
+    filter: brightness(105%);
+    transition: 0.1s;
+}
+
+.delete svg {
+    scale: 0.8;
+    pointer-events: none;
+}
+
+.ok {
+    cursor: pointer;
+    background: #D1FFD1;
+    color: #00FF00;
     border-radius: 5px;
     aspect-ratio: 1/1;
     height: 40px;

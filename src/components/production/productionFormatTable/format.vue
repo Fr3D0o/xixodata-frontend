@@ -6,27 +6,21 @@ import TableFormat from '@/components/production/productionFormatTable/tableForm
 import TablePackaging from '@/components/production/productionFormatTable/tablePackaging.vue'
 
 let props = defineProps({
-    id: Number,
-    title: String,
-    barres: Number,
-    cuita: Number,
-    data1: Array,
-    data2: Array,
-    data3: Array,
+    format: Object
 })
 
 </script>
 
 <template>
-    <Wrapper :title="title" :id="id">
+    <Wrapper :title="format.nom" :id="format.id">
         <div class="tables-wrapper">
-            <Table :data="data1" :barres="barres" :cuita="cuita" />
+            <Table :data="format.ingredients" />
             <div class="tables-sub-wrapper">
                 <div class="table-sub-left">
-                    <TableFormat :data="data2" :barres="barres" :cuita="cuita" />
+                    <TableFormat :data="format.formats" />
                 </div>
                 <div class="table-sub-right">
-                    <TablePackaging :data="data3" :barres="barres" :cuita="cuita" />
+                    <TablePackaging :data="format.packagings" />
                 </div>
             </div>
         </div>
