@@ -1,6 +1,8 @@
+import { url } from '@/globals.js'
+
 async function getAll() {
     try {
-        const response = await fetch('http://localhost:3000/format/getAll');
+        const response = await fetch(`${url}/format/getAll`);
         const json = await response.json();
 
         return json
@@ -22,7 +24,7 @@ async function getByName(nom) {
 
 async function getAllBySeason(temporada) {
     try {
-        const response = await fetch(`http://localhost:3000/format/getAllBySeason/${temporada}`);
+        const response = await fetch(`${url}/format/getAllBySeason/${temporada}`);
         const json = await response.json();
 
         return json
