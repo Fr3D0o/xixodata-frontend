@@ -20,7 +20,7 @@ import CalculView from '@/views/Calcul/CalculView.vue'
 import CalculTorroView from '@/views/Calcul/CalculTorroView.vue'
 
 const router = createRouter({
-    history: createWebHistory(import.meta.env.BASE_URL),
+    history: createWebHistory(),
     routes: [
         {
             path: '/',
