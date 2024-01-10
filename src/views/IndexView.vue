@@ -26,7 +26,6 @@ const linksStore = useSidebarStore()
 
 
 <style scoped>
-
 .indexWrapper {
     height: 100vh;
     width: 100vw;
